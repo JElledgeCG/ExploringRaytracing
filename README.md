@@ -69,9 +69,20 @@ color ray_color(const ray& r) {
 }
 ```
 
-This code models basic raytracing of a sphere, using the surface normal of the sphere at the location hit by each ray as the returned ray color.
+This code models basic raytracing of a sphere, using the surface normal of the sphere at the location hit by each ray as the returned ray color:
 
+<img src="images/PNGs/normals.png" width = 150% height = 150%></img>
 
+### Antialiasing and Blur
+
+Chapter 7 describes antialiasing for our raytracing algorithm. The idea is very straightforward and was very interesting to learn about: For each pixel, rather than send one ray into the center of the pixel, send several rays, each with a random offset within some range. Making this range 0 results in no antialiasing. Going within a 1 pixel range in both the x and y direction results in  antialiasing that removes the terrible jagged edges from the previous image:
+
+<img src="images/PNGs/normals_AA.png"></img>
+
+I started experimenting with this, and realized that by increasing the range that the random offset can be generated (I called this "blur factor" in my code) results in a very convincing and very simple blur:
+
+<div width = 50%><img src="images/PNGs/normals_blur.png"></img></div>
+<div width = 50%><img src="images/PNGs/normals_blur_EX.png"></img></div>
 
 ## Download
 
