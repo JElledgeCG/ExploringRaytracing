@@ -81,8 +81,10 @@ Chapter 7 describes antialiasing for our raytracing algorithm. The idea is very 
 
 I started experimenting with this, and realized that by increasing the range that the random offset can be generated (I called this "blur factor" in my code) results in a very convincing and very simple blur:
 
-<div width = 50%><img src="images/PNGs/normals_blur.png"></img></div>
-<div width = 50%><img src="images/PNGs/normals_blur_EX.png"></img></div>
+<img src="images/PNGs/normals_blur.png" width = 49.5%></img>
+<img src="images/PNGs/normals_blur_EX.png" width = 49.5%></img>
+
+*Left: 200 samples per pixel, blur factor 10. Right: 200 samples per pixel, blur factor 100.
 
 ## Download
 
