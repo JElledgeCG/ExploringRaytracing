@@ -24,7 +24,7 @@
 <p align="left">
   <a href="#introduction">Introduction</a> •
   <a href="#part-i-ray-tracing-in-one-weekend">PART I: Ray Tracing in One Weekend</a> •
-  <a href="#download">Download</a> •
+  <a href="#part-ii">Part II</a> •
   <a href="#credits">Credits</a>
 </p>
 
@@ -86,7 +86,7 @@ I started experimenting with this, and realized that by increasing the range tha
 
 *Left: 200 samples per pixel, blur factor 10. Right: 200 samples per pixel, blur factor 100.
 
-## Download
+## Part II
 
 Another section
 
