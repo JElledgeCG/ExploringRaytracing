@@ -86,6 +86,10 @@ I started experimenting with this, and realized that by increasing the range tha
 
 *Left: 200 samples per pixel, blur factor 10. Right: 200 samples per pixel, blur factor 100.
 
+### Materials: Diffuse
+
+
+
 ## Part II
 
 Another section
