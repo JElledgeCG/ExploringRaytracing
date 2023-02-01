@@ -12,7 +12,7 @@
 color ray_color(const ray& r, const hittable& world, int depth) {
     hit_record rec;
 
-    if (depth  <= 0)
+    if (depth <= 0)
         return color(0, 0, 0);
 
     if (world.hit(r, 0.001, infinity, rec)) {
@@ -41,7 +41,7 @@ hittable_list random_scene() {
             if ((center - point3(4, 0.2, 0)).length() > 0.9) {
                 shared_ptr<material> sphere_material;
 
-                if (choose_mat < 0.8) {
+                if (choose_mat < 1.1) { // Guarantee lambertian for now
                     // Diffuse
                     auto albedo = color::random() * color::random();
                     sphere_material = make_shared<lambertian>(albedo);
@@ -61,14 +61,15 @@ hittable_list random_scene() {
             }
         }
     }
-    auto material1 = make_shared<dielectric>(1.5);
-    world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
-    world.add(make_shared<sphere>(point3(0, 1, 0), 0.95, material1));
+    //auto material1 = make_shared<dielectric>(1.5);
+    //world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
+    //world.add(make_shared<sphere>(point3(0, 1, 0), 0.95, material1));
 
     auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
     world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
 
-    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+    auto material3 = make_shared<lambertian>(color(0.7, 0.6, 0.5));
+    //auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
     return world;
@@ -79,12 +80,12 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     // Image
-    const auto aspect_ratio = 4.0 / 1.0;
-    const int image_width = 600;
+    const auto aspect_ratio = 16.0 / 9.0;
+    const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 200;
+    const int samples_per_pixel = 50;
     const int blur_factor = 1.0;
-    const int max_depth = 200;
+    const int max_depth = 51;
 
     // World
 
@@ -122,7 +123,17 @@ int main() {
     }
 
     auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::minutes>(stop - start);
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
 
-    std::cerr << "\nRender Time: " << duration.count() << " Minutes" << std::endl;
+    int total = duration.count();
+
+    int hours = total / 3600;
+    total -= hours * 3600;
+
+    int minutes = total / 60;
+    total -= minutes * 60;
+
+    int seconds = total;
+
+    std::cerr << "\nRender Time: " << hours << ":" << minutes << ":" << seconds << std::endl;
 }
