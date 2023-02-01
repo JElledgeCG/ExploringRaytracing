@@ -23,6 +23,7 @@
   <a href="#introduction">Introduction</a> •
   <a href="#part-i-ray-tracing-in-one-weekend">PART I: Ray Tracing in One Weekend</a> •
   <a href="#part-ii-optimization-and-performance">Part II: Optimization and Performance</a> •
+  <a href="#part-iii-extending-the-raytracer">Part III: Extending the Raytracer</a> •
   <a href="#credits">Credits</a>
 </p>
 
@@ -255,6 +256,10 @@ While I am happy with the way this renderer turned out, there are still many thi
 This concludes Part I of Exploring raytracing. In Part II, I will implement bounding volumes and parallelize my code in order to dramatically increase performance.
 
 ## Part II: Optimization and Performance
+
+COMING SOON
+
+## Part III: Extending the Raytracer
 
 COMING SOON
 
