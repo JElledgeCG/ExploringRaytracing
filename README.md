@@ -21,7 +21,7 @@
 
 <p align="left">
   <a href="#introduction">Introduction</a> •
-  <a href="#part-i-ray-tracing-in-one-weekend">PART I: Ray Tracing in One Weekend</a> •
+  <a href="#part-i-ray-tracing-in-one-weekend">Part I: Ray Tracing in One Weekend</a> •
   <a href="#part-ii-optimization-and-performance">Part II: Optimization and Performance</a> •
   <a href="#part-iii-extending-the-raytracer">Part III: Extending the Raytracer</a> •
   <a href="#credits">Credits</a>
@@ -31,7 +31,7 @@
 
 Welcome to Exploring Raytracing! As part of my computer graphics journey, I've decided to dive into offline raytracing as a starting point for understanding PBR. This repo serves as a devlog and progress tracker where I can store code, thoughts about what I'm learning, and plans for the future of this project!
 
-## PART I: Ray Tracing in One Weekend
+## Part I: Ray Tracing in One Weekend
 
 To begin, I decided to follow along with the book "Ray Tracing in One Weekend" by Peter Shirley and build a raytracer from scratch in C++. This resource was very useful and taught me many things. Much of the code in this repo comes directly from this source (and has been marked as such), but I still learned enough to understand the concepts and algorithms and to be inspired to extend the renderer (see Part II). Below are some key learnings and thoughts that I had while following along:
 
