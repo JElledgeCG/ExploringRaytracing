@@ -22,7 +22,7 @@
 <p align="left">
   <a href="#introduction">Introduction</a> •
   <a href="#part-i-ray-tracing-in-one-weekend">PART I: Ray Tracing in One Weekend</a> •
-  <a href="#part-ii">Part II</a> •
+  <a href="#part-ii-optimization-and-performance">Part II: Optimization and Performance</a> •
   <a href="#credits">Credits</a>
 </p>
 
@@ -260,4 +260,4 @@ COMING SOON
 
 ## Credits
 
-Credit Section
+[_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
