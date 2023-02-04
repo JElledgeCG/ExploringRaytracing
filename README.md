@@ -249,7 +249,7 @@ Putting all three materials together in a random scene, I was able to render thi
 
 While I am happy with the way this renderer turned out, there are still many things I want to learn, fix, and add to this raytracer:
 
-1. Performance. While raytracing is pretty, even with this relatively simple implementation, it is painfully slow as the scene gains more geometry. While I could render 4k images for simpler scenes, when I tried to redner a 4k version of the final random scene, it took 8 hours of computing to only finish about 40% of the image. I could not be bothered to wait for the other 60%, and immediately began wondering about ways to increase performance. I want to be able to do renders of complex scenes and models once I implement ray-triangle intersection and model loading, but some restructuring and optimizing will need to be done first.
+1. Performance. While raytracing is pretty, even with this relatively simple implementation, it is painfully slow as the scene gains more geometry. While I could render 4k images for simpler scenes, when I tried to redner a 4k version of the final random scene, it took 8 hours of computing to only finish about 20% of the image. I could not be bothered to wait for the other 60%, and immediately began wondering about ways to increase performance. I want to be able to do renders of complex scenes and models once I implement ray-triangle intersection and model loading, but some restructuring and optimizing will need to be done first.
 
 2. Features. Spheres can only be used to represent so many objects, and they are definitely not the ideal 3D primitive. I want to implement ray-triangle intersection and model loading to accompany it. In addition, I want to add direct lighting and texturing in order to render more dramatic and interesting scenes.
 
@@ -257,7 +257,27 @@ This concludes Part I of Exploring raytracing. In Part II, I will implement boun
 
 ## Part II: Optimization and Performance
 
-COMING SOON
+At the end of my part one, I decided I would once again try to render a nice 4K version of the final scene, to have as a reminder and bask in the glory of beautiful raytraced spheres. I booted up VS Code, cranked the hyperparameter settings of my code to the highest reasonable settings (4K, 200 samples per pixel, 200 child ray depth) and let my code run overnight. When I awoke, the render was only about 20% complete. I went to class, went to work, and returned to see the render at roughly 60% - after nearly 20 hours of rendering. I decided to give it another night, and when I woke up the next morning, I rushed to turn on my monitor and check the progress - only to find my computer had turned off in the middle of the night. The power had gone out while I was asleep. I was left with this partially completed image:
+
+<img src="images/PNGs/final_scene_4k.png"></img>
+
+While it is beautiful (the part that exists, at least), it's clearly time to dive into what is slowing down execution so much, and look for changes to improve render times.
+
+### Profiling and Testing
+
+To begin testing, I first wanted test the difference between the performance impact of samples per pixel and maximum ray child depth. I was also interested in the effect each of these had on quality, and which provided the best quality : time ratio. I produced the following images:
+
+<img src="images/PNGs/compare_1_1.png" width = 175%></img>
+*SPP: 1, MRCD: 1, Time: 00:00:05
+
+<img src="images/PNGs/compare_1_100.png" width = 175%></img>
+*SPP: 1, MRCD: 100, Time: 00:00:07
+
+<img src="images/PNGs/compare_100_1.png" width = 175%></img>
+*SPP: 100, MRCD: 1, Time: 00:08:24
+
+<img src="images/PNGs/compare_50_50.png" width = 175%></img>
+*SPP: 50, MRCD: 50, Time: 00:05:57
 
 ## Part III: Extending the Raytracer
 
