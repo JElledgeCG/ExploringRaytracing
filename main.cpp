@@ -7,6 +7,7 @@
 #include "material.h"
 
 #include <iostream>
+#include <cstdio>
 #include <chrono>
 
 color ray_color(const ray& r, const hittable& world, int depth) {
@@ -41,7 +42,7 @@ hittable_list random_scene() {
             if ((center - point3(4, 0.2, 0)).length() > 0.9) {
                 shared_ptr<material> sphere_material;
 
-                if (choose_mat < 1.1) { // Guarantee lambertian for now
+                if (choose_mat < 0.8) { 
                     // Diffuse
                     auto albedo = color::random() * color::random();
                     sphere_material = make_shared<lambertian>(albedo);
@@ -56,20 +57,19 @@ hittable_list random_scene() {
                     // Glass
                     sphere_material = make_shared<dielectric>(1.5);
                     world.add(make_shared<sphere>(center, 0.2, sphere_material));
-                    world.add(make_shared<sphere>(center, 0.15, sphere_material));
+                    world.add(make_shared<sphere>(center, -0.15, sphere_material));
                 }
             }
         }
     }
-    //auto material1 = make_shared<dielectric>(1.5);
-    //world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
-    //world.add(make_shared<sphere>(point3(0, 1, 0), 0.95, material1));
+    auto material1 = make_shared<dielectric>(1.5);
+    world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
 
     auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
     world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
 
-    auto material3 = make_shared<lambertian>(color(0.7, 0.6, 0.5));
-    //auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+    //auto material3 = make_shared<lambertian>(color(0.7, 0.6, 0.5));
+    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
     return world;
@@ -81,11 +81,11 @@ int main() {
 
     // Image
     const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width = 400;
+    const int image_width = 1920;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 50;
+    const int samples_per_pixel = 10;
     const int blur_factor = 1.0;
-    const int max_depth = 51;
+    const int max_depth = 50;
 
     // World
 
@@ -108,7 +108,24 @@ int main() {
 
     for (int j = image_height - 1; j >= 0; --j) {
 
-        std::cerr << "\rScanlines Remaining: " << j << ' ' << std::flush;
+        double progress = 1.0 - static_cast<double>(j) / (image_height / 1);
+
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+        int time_remaining = duration.count() * (1.0 / progress - 1);
+
+        int hrs = time_remaining / 3600;
+        time_remaining -= hrs * 3600;
+
+        int mins = time_remaining / 60;
+        time_remaining -= mins * 60;
+
+        int secs = time_remaining;
+
+        char buf[30];
+        sprintf(buf, "\rTime Remaining: %02d:%02d:%02d", hrs, mins, secs);
+
+        std::cerr << buf << std::flush;
 
         for (int i = 0; i < image_width; ++i) {
             color pixel_color(0, 0, 0);
@@ -135,5 +152,8 @@ int main() {
 
     int seconds = total;
 
-    std::cerr << "\nRender Time: " << hours << ":" << minutes << ":" << seconds << std::endl;
+    char buffer[45];
+    sprintf(buffer, "\rRendering Complete. Render Time: %02d:%02d:%02d", hours, minutes, seconds);
+
+    std::cerr << buffer << std::endl;
 }
