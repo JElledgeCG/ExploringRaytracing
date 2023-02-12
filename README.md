@@ -265,7 +265,7 @@ While it is beautiful (the part that exists, at least), it's clearly time to div
 
 ### Profiling and Testing
 
-To begin testing, I first wanted test the difference between the performance impact of samples per pixel and maximum ray child depth. I was also interested in the effect each of these had on quality, and which provided the best quality : time ratio. I produced the following images:
+To begin testing, I first wanted test the difference between the performance impact of samples per pixel and maximum ray child depth. I was also interested in the effect each of these had on quality, and which provided the best quality:time ratio. I produced the following images:
 
 <img src="images/PNGs/compare_1_1.png" width = 175%></img>
 *SPP: 1, MRCD: 1, Time: 00:00:05
@@ -278,6 +278,12 @@ To begin testing, I first wanted test the difference between the performance imp
 
 <img src="images/PNGs/compare_50_50.png" width = 175%></img>
 *SPP: 50, MRCD: 50, Time: 00:05:57
+
+This testing showcases the relationship between sample rate and max bounces. It's apparent that sample rate has a much higher impact on both quality and performance. This makes a lot of sense intuitively; increasing maximum bounce depth will only matter in complex regions of the scene, where the ray is bouncing many times rather than reflecting off into empty space. Sample rate, howevere, will ALWAYS generate SPP rays per pixel. 
+
+It's clear that increasing the number of rays traversing the scene is heavily impacting performance - but which part of the process is the most taxing?
+
+
 
 ## Part III: Extending the Raytracer
 
