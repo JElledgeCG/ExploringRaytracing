@@ -6,6 +6,8 @@
 #include "camera.h"
 #include "material.h"
 
+#include "bvh.h"
+
 #include <iostream>
 #include <cstdio>
 #include <chrono>
@@ -28,7 +30,8 @@ color ray_color(const ray& r, const hittable& world, int depth) {
     return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
 
-hittable_list random_scene() {
+hittable_list random_scene(const bool bvh) {
+    hittable_list world_bvh;
     hittable_list world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
@@ -72,6 +75,10 @@ hittable_list random_scene() {
     auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
+    if (bvh) {
+        world_bvh.add(make_shared<bvh_node>(world, 0, 1));
+        return world_bvh;
+    }
     return world;
 }
 
@@ -83,13 +90,14 @@ int main() {
     const auto aspect_ratio = 16.0 / 9.0;
     const int image_width = 1920;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 10;
+    const int samples_per_pixel = 25;
     const int blur_factor = 1.0;
-    const int max_depth = 50;
+    const int max_depth = 25;
+    const bool use_BVH = true;
 
     // World
 
-    auto world = random_scene();
+    auto world = random_scene(use_BVH);
 
     // Camera
 
