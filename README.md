@@ -281,7 +281,7 @@ To begin testing, I first wanted test the difference between the performance imp
 
 This testing showcases the relationship between sample rate and max bounces. It's apparent that sample rate has a much higher impact on both quality and performance. This makes a lot of sense intuitively; increasing maximum bounce depth will only matter in complex regions of the scene, where the ray is bouncing many times rather than reflecting off into empty space. Sample rate, howevere, will ALWAYS generate SPP rays per pixel. 
 
-It's clear that increasing the number of rays traversing the scene is heavily impacting performance - but which part of the process is the most taxing? Profiling the execution of the 4k render mentioned earlier using GRPOF produced the foloowing:
+It's clear that increasing the number of rays traversing the scene is heavily impacting performance - but which part of the process is the most taxing? Profiling the execution of an HD render with 25 SPP and 25 maximum ray depth produced the following:
 
 ```
 Flat profile:
@@ -289,11 +289,10 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
- 30.92    259.58   259.58 2852863466     0.00     0.00  sphere::hit(ray const&, double, double, hit_record&) const
- 15.25    387.61   128.02 3673374993     0.00     0.00  vec3::vec3(double, double, double)
- 12.56    493.06   105.45 1556359773     0.00     0.00  vec3::length_squared() const
-  8.81    567.02    73.97 2930151760     0.00     0.00  dot(vec3 const&, vec3 const&)
-  7.79    632.42    65.40 2956747723     0.00     0.00  operator-(vec3 const&, vec3 const&)
+ 31.90    639.88   639.88 2666971080     0.00     0.00  sphere::hit(ray const&, double, double, hit_record&) const
+ 15.44    949.54   309.66 416362402     0.00     0.00  vec3::vec3(double, double, double)
+ 12.84   1206.97   257.43 1402230129     0.00     0.00  vec3::length_squared() const
+  8.75   1382.36   175.39 2859473104     0.00     0.00  dot(vec3 const&, vec3 const&)
   . . .
 ```
 
