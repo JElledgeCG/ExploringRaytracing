@@ -30,6 +30,27 @@ color ray_color(const ray& r, const hittable& world, int depth) {
     return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
 
+hittable_list bubble_test_scene(const bool bvh) {
+    hittable_list world_bvh;
+    hittable_list world;
+
+    auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
+    world.add(make_shared<sphere>(point3(0, -1000, 0), 1000, ground_material));
+
+    auto material1 = make_shared<dielectric>(1.5);
+    world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
+    world.add(make_shared<sphere>(point3(0, 1, 0), -0.95, material1));
+
+    auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
+    world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
+
+    if (bvh) {
+        world_bvh.add(make_shared<bvh_node>(world, 0, 1));
+        return world_bvh;
+    }
+    return world;       
+}
+
 hittable_list random_scene(const bool bvh) {
     hittable_list world_bvh;
     hittable_list world;
@@ -88,15 +109,16 @@ int main() {
 
     // Image
     const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width = 1920;
+    const int image_width = 3840;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 25;
+    const int samples_per_pixel = 100;
     const int blur_factor = 1.0;
-    const int max_depth = 25;
+    const int max_depth = 100;
     const bool use_BVH = true;
 
     // World
 
+    //auto world = bubble_test_scene(use_BVH);
     auto world = random_scene(use_BVH);
 
     // Camera
@@ -131,7 +153,7 @@ int main() {
         int secs = time_remaining;
 
         char buf[30];
-        sprintf(buf, "\rTime Remaining: %02d:%02d:%02d", hrs, mins, secs);
+        sprintf(buf, "\rEstimated Time Remaining: %02d:%02d:%02d", hrs, mins, secs);
 
         std::cerr << buf << std::flush;
 
